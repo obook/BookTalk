@@ -34,4 +34,20 @@ def SaveFriendIp(ip):
     config['friendip'] = ip
     return SaveConfig()
 
+def GetOutputId():
+    LoadConfig()
+    return config['OutputDeviceId']
+
+def SaveOutputId(n):
+    config['OutputDeviceId'] = n
+    return SaveConfig()
+
+def GetInputId():
+    LoadConfig()
+    return config['InputDeviceId']
+
+def SaveInputId(n):
+    config['InputDeviceId'] = n
+    return SaveConfig()
+
     

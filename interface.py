@@ -5,16 +5,17 @@ Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 @author: obook
 """
 
-import tkinter , tkinter.ttk
+import tkinter, tkinter.ttk
 from ip import get_interfaces
-from settings import GetFriendIp
+from settings import GetFriendIp, GetOutputId, GetInputId
 
 ips = get_interfaces()
 FriendIp = GetFriendIp()
 
 Fenetre = tkinter.Tk() #création de la fenêtre, avec un nom de votre choix Fenetre
-Fenetre.geometry("400x120")
 Fenetre.title('BookTalk ' +ips[0]['ip']) #Titre de la fenêtre
+Fenetre.geometry("400x120")
+Fenetre.resizable(False, False)
 
 # configure the grid
 Fenetre.columnconfigure(0, weight=1)
@@ -51,13 +52,13 @@ def MakeInterface(StartFunc, StopFunc, QuitFunc, OutputDevicesList, InputDevices
     for OutputDevice in OutputDevicesList:
         OutputDevices.append(OutputDevice["name"])
     OutputDeviceCombo['values'] = OutputDevices
-    OutputDeviceCombo.current(0)
+    OutputDeviceCombo.current(GetOutputId())
 
     InputDevices=[]
     for InputDevice in InputDevicesList:
         InputDevices.append(InputDevice["name"])
     InputDeviceCombo['values'] = InputDevices
-    InputDeviceCombo.current(0)
+    InputDeviceCombo.current(GetInputId())
     
     Button_Start['command'] = StartFunc
     Button_Stop['command'] =StopFunc

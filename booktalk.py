@@ -9,24 +9,20 @@ sudo apt-get install portaudio19-dev
 pip3 install pyaudio
 """
 
-from tkinter import *
 from threading import Thread
-
 from recepteur import ServerStart
 from emetteur import ClientSpeak
-from interface import *
+from interface import MakeInterface, GetOutputCombo, SetStartOn, SetStartOff, SetSpeakEnable, GetInputCombo, GetInputIp, SetSpeakDisabled
 from devices import InputDevices, OutputDevices
-from settings import SaveFriendIp
+from settings import SaveFriendIp, SaveOutputId, SaveInputId
 
 states = {"recepteur":True,"emetteur":False} # False=off True=on
-
-#╣ Default devices
-
 OutputDevicesList = []
 InputDevicesList = []
 
 def StartListen():
     itemid = GetOutputCombo()
+    SaveOutputId(itemid)
     deviceid = OutputDevicesList[itemid]['id']
     devicename = OutputDevicesList[itemid]['name']
     print(f"Start Listen on {devicename} ({deviceid})")
@@ -41,10 +37,14 @@ def StopListen():
     states['recepteur'] = False
     SetStartOff()
     
+    SaveInputId(GetInputCombo())
+    SaveOutputId(GetOutputCombo())
+    
 def StartSpeak(event):   
 
     if str(event.widget).split(".")[-1] == 'buttonSpeak':
         itemid = GetInputCombo()
+        SaveInputId(itemid)
         deviceid = InputDevicesList[itemid]['id']
         devicename = InputDevicesList[itemid]['name']
         friendip = GetInputIp()
@@ -81,5 +81,6 @@ SetSpeakDisabled()
 
 Fenetre.mainloop() # lance la boucle principale
 
+SaveFriendIp(GetInputIp())
 
 print("FINI !")
