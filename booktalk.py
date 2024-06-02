@@ -3,6 +3,10 @@
 Created on Jun 2 2024
 Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 @author: obook
+Windows Only
+For Linux (try) :
+sudo apt-get install portaudio19-dev
+pip3 install pyaudio
 """
 
 from tkinter import *
