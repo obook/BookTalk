@@ -7,29 +7,31 @@ Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 
 import json
 
-config = {"friendip": "127.0.01", "OutputDeviceId": 0, "InputDeviceId": 0}
-
-def SaveConfig():
-    global config
-    
-    with open('booktalk.json', 'w') as f:
-        json.dump(config, f)
+config = {"friendip": "127.0.0.1", "OutputDeviceId": 0, "InputDeviceId": 0}
+settingsfile = 'booktalk.json'
 
 def LoadConfig():
     global config
+    
+    try:
+        with open(settingsfile, 'r') as f:
+            config = json.load(f)
+    except:
+        SaveConfig()
+        
+    return True
 
-    with open('config.json', 'r') as f:
-        config = json.load(f)
-    
+def SaveConfig():
+    with open(settingsfile, 'w') as f:
+        json.dump(config, f)
+    return True
+
 def GetFriendIp():
-    global config
-    
     LoadConfig()
     return config['friendip']
 
-def SetFriendIp(ip):
-    global config
-    
+def SaveFriendIp(ip):
     config['friendip'] = ip
-    SaveConfig()
+    return SaveConfig()
+
     

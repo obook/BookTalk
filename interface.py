@@ -7,8 +7,10 @@ Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 
 import tkinter , tkinter.ttk
 from ip import get_interfaces
+from settings import GetFriendIp
 
 ips = get_interfaces()
+FriendIp = GetFriendIp()
 
 Fenetre = tkinter.Tk() #création de la fenêtre, avec un nom de votre choix Fenetre
 Fenetre.geometry("400x120")
@@ -28,7 +30,7 @@ InputDeviceCombo.grid(row=2, column=2)
 
 FriendIP_Label=tkinter.Label(Fenetre, text = 'IP Ami :').grid(row=3, column=1)
 FriendIP = tkinter.StringVar()
-FriendIP.set("127.0.0.1")
+FriendIP.set(FriendIp)
 tkinter.Entry(Fenetre,textvariable = FriendIP).grid(row=3, column=2)
 
 Button_Start = tkinter.Button(Fenetre, text ='Démarrer', width=10)

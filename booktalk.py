@@ -12,6 +12,7 @@ from recepteur import ServerStart
 from emetteur import ClientSpeak
 from interface import *
 from devices import InputDevices, OutputDevices
+from settings import SaveFriendIp
 
 states = {"recepteur":True,"emetteur":False} # False=off True=on
 
@@ -43,12 +44,13 @@ def StartSpeak(event):
         deviceid = InputDevicesList[itemid]['id']
         devicename = InputDevicesList[itemid]['name']
         friendip = GetInputIp()
+        SaveFriendIp(friendip)
+        
         print(f"Start Speak to {friendip} on {devicename} ({deviceid})")
 
-        if str(event.widget).split(".")[-1] == 'buttonSpeak':
-            client_thread = Thread(target=ClientSpeak, args=(states,deviceid,friendip))
-            states['emetteur'] = True
-            client_thread.start()
+        client_thread = Thread(target=ClientSpeak, args=(states,deviceid,friendip))
+        states['emetteur'] = True
+        client_thread.start()
 
 def StopSpeak(event):
     if str(event.widget).split(".")[-1] == 'buttonSpeak':
