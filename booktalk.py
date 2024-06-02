@@ -16,7 +16,7 @@ from interface import MakeInterface, GetOutputCombo, SetStartOn, SetStartOff, Se
 from devices import InputDevices, OutputDevices
 from settings import SaveFriendIp, SaveOutputId, SaveInputId
 
-states = {"recepteur":True,"emetteur":False} # False=off True=on
+states = {"recepteur":False,"emetteur":False} # False=off True=on
 OutputDevicesList = []
 InputDevicesList = []
 
@@ -26,19 +26,18 @@ def StartListen():
     deviceid = OutputDevicesList[itemid]['id']
     devicename = OutputDevicesList[itemid]['name']
     print(f"Start Listen on {devicename} ({deviceid})")
-    
     server_thread = Thread(target=ServerStart, args=(states,deviceid))
     server_thread.start()
     SetStartOn()
     SetSpeakEnable()
+    states['recepteur'] = True
 
 def StopListen():
     print("StopListen...")
-    states['recepteur'] = False
     SetStartOff()
-    
     SaveInputId(GetInputCombo())
     SaveOutputId(GetOutputCombo())
+    states['recepteur'] = False
     
 def StartSpeak(event):   
 

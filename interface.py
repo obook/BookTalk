@@ -76,8 +76,8 @@ def GetInputIp():
     return FriendIP.get()
 
 def SetStartOn():
-    Button_Start["bg"] = 'green'
-    Button_Start["fg"] = 'black'
+    #Button_Start["bg"] = 'green'
+    #Button_Start["fg"] = 'black'
     Button_Start["text"] = 'Démarré'
     Button_Start.config(state="disabled")
 
