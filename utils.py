@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Jun  1 09:25:07 2024
-
+Created on Jun 2 2024
 @author: obook
 Source originale : https://github.com/richardos/audio-stream
+! Windows Only
 """
 
 def get_wasapi_devices(pyaudio):

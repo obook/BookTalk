@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+Created on Jun 2 2024
 Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 @author: obook
 Source originale : https://github.com/richardos/audio-stream
