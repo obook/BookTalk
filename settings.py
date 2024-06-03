@@ -8,6 +8,7 @@ Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 import json
 
 config = {"friendip": "127.0.0.1", "OutputDeviceId": 0, "InputDeviceId": 0}
+
 settingsfile = 'booktalk.json'
 
 def LoadConfig():

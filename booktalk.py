@@ -12,7 +12,7 @@ pip3 install pyaudio
 from threading import Thread
 from recepteur import ServerStart
 from emetteur import ClientSpeak
-from interface import MakeInterface, GetOutputCombo, SetStartOn, SetStartOff, SetSpeakEnable, GetInputCombo, GetInputIp, SetSpeakDisabled
+from interface import MakeInterface, GetOutputCombo, SetStartOn, SetStartOff, GetInputCombo, GetInputIp, SetSpeakDisabled
 from devices import InputDevices, OutputDevices
 from settings import SaveFriendIp, SaveOutputId, SaveInputId
 
@@ -28,19 +28,17 @@ def StartListen():
     print(f"Start Listen on {devicename} ({deviceid})")
     server_thread = Thread(target=ServerStart, args=(states,deviceid))
     server_thread.start()
-    SetStartOn()
-    SetSpeakEnable()
     states['recepteur'] = True
-
+    SetStartOn()
+    
 def StopListen():
     print("StopListen...")
-    SetStartOff()
     SaveInputId(GetInputCombo())
     SaveOutputId(GetOutputCombo())
     states['recepteur'] = False
+    SetStartOff()
     
 def StartSpeak(event):   
-
     if str(event.widget).split(".")[-1] == 'buttonSpeak':
         itemid = GetInputCombo()
         SaveInputId(itemid)
@@ -59,14 +57,12 @@ def StopSpeak(event):
     if str(event.widget).split(".")[-1] == 'buttonSpeak':
         states['emetteur'] = False
 
-        
 def Quit():
     print("Quitter")
     states['emetteur'] = False
     states['recepteur'] = False
     Fenetre.destroy()
     
-
 OutputDevicesList = OutputDevices()
 InputDevicesList = InputDevices()
 
@@ -82,4 +78,3 @@ Fenetre.mainloop() # lance la boucle principale
 
 SaveFriendIp(GetInputIp())
 
-print("FINI !")

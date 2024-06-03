@@ -6,6 +6,7 @@ Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 """
 
 import tkinter, tkinter.ttk
+from PIL import Image, ImageTk
 from ip import get_interfaces
 from settings import GetFriendIp, GetOutputId, GetInputId
 
@@ -16,6 +17,10 @@ Fenetre = tkinter.Tk() #création de la fenêtre, avec un nom de votre choix Fen
 Fenetre.title('BookTalk ' +ips[0]['ip']) #Titre de la fenêtre
 Fenetre.geometry("400x120")
 Fenetre.resizable(False, False)
+
+ico = Image.open('booktalk.png')
+photo = ImageTk.PhotoImage(ico)
+Fenetre.wm_iconphoto(False, photo)
 
 # configure the grid
 Fenetre.columnconfigure(0, weight=1)
@@ -32,7 +37,8 @@ InputDeviceCombo.grid(row=2, column=2)
 FriendIP_Label=tkinter.Label(Fenetre, text = 'IP Ami :').grid(row=3, column=1)
 FriendIP = tkinter.StringVar()
 FriendIP.set(FriendIp)
-tkinter.Entry(Fenetre,textvariable = FriendIP).grid(row=3, column=2)
+FriendIPEntry = tkinter.Entry(Fenetre,textvariable = FriendIP)
+FriendIPEntry.grid(row=3, column=2)
 
 Button_Start = tkinter.Button(Fenetre, text ='Démarrer', width=10)
 Button_Start.grid(row=4, column=1)
@@ -61,8 +67,8 @@ def MakeInterface(StartFunc, StopFunc, QuitFunc, OutputDevicesList, InputDevices
     InputDeviceCombo.current(GetInputId())
     
     Button_Start['command'] = StartFunc
-    Button_Stop['command'] =StopFunc
-    Button_Quit['command'] =QuitFunc
+    Button_Stop['command'] = StopFunc
+    Button_Quit['command'] = QuitFunc
     
     return Fenetre
 
@@ -80,9 +86,19 @@ def SetStartOn():
     #Button_Start["fg"] = 'black'
     Button_Start["text"] = 'Démarré'
     Button_Start.config(state="disabled")
+    Button_Stop.config(state="normal")
+    Button_Speak.config(state="normal")
+    OutputDeviceCombo.config(state="disabled")
+    FriendIPEntry.config(state="disabled")
 
 def SetStartOff():
     Button_Start.config(bg = 'SystemButtonFace')
+    Button_Start.config(state="normal")
+    Button_Start["text"] = 'Démarrer'
+    Button_Stop.config(state="disabled")
+    Button_Speak.config(state="disabled")
+    OutputDeviceCombo.config(state="normal")
+    FriendIPEntry.config(state="normal")
     
 def SetSpeakDisabled():
     Button_Speak.config(state="disabled")

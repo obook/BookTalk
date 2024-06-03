@@ -24,11 +24,13 @@ def run_socket_connection(port, audio_stream, states):
     try:
         serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        serversocket.bind(('', int(port)))
+        serversocket.bind(("0.0.0.0", int(port)))
         serversocket.listen(5)
+        
+        # Futur use ? serversocket.setblocking(False)
 
         print('Waiting for client connection...')
-        transmitter, addr = serversocket.accept() # bloquant !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        transmitter, addr = serversocket.accept() # bloquant !
         print('Client connected.')
 
         data = transmitter.recv(BUFFER_SIZE)
