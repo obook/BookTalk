@@ -46,7 +46,7 @@ Button_Start.grid(row=4, column=1)
 Button_Stop = tkinter.Button(Fenetre, text ='Arrêter', width=10, state="disabled")
 Button_Stop.grid(row=4, column=2)
 
-Button_Speak = tkinter.Button(Fenetre, name="buttonSpeak", text ='Parler', width=10, activebackground="red")
+Button_Speak = tkinter.Button(Fenetre, name="buttonSpeak", text ='Parler', width=10, activebackground="red", state="disabled")
 Button_Speak.grid(row=5, column=1)
 
 Button_Quit = tkinter.Button(Fenetre, text ='Quitter', width=10)
@@ -58,13 +58,19 @@ def MakeInterface(StartFunc, StopFunc, QuitFunc, OutputDevicesList, InputDevices
     for OutputDevice in OutputDevicesList:
         OutputDevices.append(OutputDevice["name"])
     OutputDeviceCombo['values'] = OutputDevices
-    OutputDeviceCombo.current(GetOutputId())
-
+    try:
+        OutputDeviceCombo.current(GetOutputId()) # Crash if id do not exist
+    except:
+       pass
+     
     InputDevices=[]
     for InputDevice in InputDevicesList:
         InputDevices.append(InputDevice["name"])
     InputDeviceCombo['values'] = InputDevices
-    InputDeviceCombo.current(GetInputId())
+    try:
+        InputDeviceCombo.current(GetInputId()) # Crash if id do not exist
+    except:
+       pass
     
     Button_Start['command'] = StartFunc
     Button_Stop['command'] = StopFunc

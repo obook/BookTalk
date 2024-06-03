@@ -12,7 +12,7 @@ pip3 install pyaudio
 from threading import Thread
 from recepteur import ServerStart
 from emetteur import ClientSpeak
-from interface import MakeInterface, GetOutputCombo, SetStartOn, SetStartOff, GetInputCombo, GetInputIp, SetSpeakDisabled
+from interface import MakeInterface, GetOutputCombo, SetStartOn, SetStartOff, GetInputCombo, GetInputIp
 from devices import InputDevices, OutputDevices
 from settings import SaveFriendIp, SaveOutputId, SaveInputId
 
@@ -25,7 +25,7 @@ def StartListen():
     SaveOutputId(itemid)
     deviceid = OutputDevicesList[itemid]['id']
     devicename = OutputDevicesList[itemid]['name']
-    print(f"Start Listen on {devicename} ({deviceid})")
+    print(f"Start Listen on [{deviceid}] {devicename}")
     server_thread = Thread(target=ServerStart, args=(states,deviceid))
     server_thread.start()
     states['recepteur'] = True
@@ -47,7 +47,7 @@ def StartSpeak(event):
         friendip = GetInputIp()
         SaveFriendIp(friendip)
         
-        print(f"Start Speak to {friendip} on {devicename} ({deviceid})")
+        print(f"Start Speak to {friendip} on [{deviceid}] {devicename}")
 
         client_thread = Thread(target=ClientSpeak, args=(states,deviceid,friendip))
         states['emetteur'] = True
@@ -66,13 +66,11 @@ def Quit():
 OutputDevicesList = OutputDevices()
 InputDevicesList = InputDevices()
 
-Fenetre = MakeInterface(StartListen,StopListen,Quit, OutputDevicesList, InputDevicesList) # MakeInterface(StartFunc, StopFunc, QuitFunc):
+Fenetre = MakeInterface(StartListen,StopListen,Quit, OutputDevicesList, InputDevicesList)
 
 # Détection du clic souris gauche
 Fenetre.bind("<ButtonPress-1>", StartSpeak) # Appuyé
 Fenetre.bind("<ButtonRelease-1>", StopSpeak) # Relaché
-
-SetSpeakDisabled()
 
 Fenetre.mainloop() # lance la boucle principale
 

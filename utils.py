@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Jun 2 2024
+Projet NSI 2023-2024 Sainte-Marie Bastide/Bordeaux
 @author: obook
 Source originale : https://github.com/richardos/audio-stream
 ! Windows Only
@@ -19,11 +20,13 @@ def get_wasapi_devices(pyaudio):
         device_id += 1
         try:
             device_info = pyaudio.get_device_info_by_index(device_id)
-            api_info = pyaudio.get_host_api_info_by_index(device_info["hostApi"])
-            # Do not work with Windows 11
+            #! Do not work with Windows 11
+            #api_info = pyaudio.get_host_api_info_by_index(device_info["hostApi"])
             #is_wasapi = api_info["name"].find("WASAPI") != -1
             #if is_wasapi:
-            wasapi_devices[device_id] = device_info
+            is_input = device_info["maxInputChannels"] > 0
+            if is_input:
+                wasapi_devices[device_id] = device_info
         except IOError:
             # device_id not found
             break
